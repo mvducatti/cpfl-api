@@ -15,6 +15,39 @@ class DBNewsOperations{
         
     }
 
+    public function getTaxes(){
+        $stmt = $this->con->prepare("SELECT `flag_color`, `kwh`, `percentage` FROM `taxas`");
+        $stmt->execute();
+        /* bind result variables */
+        $stmt->bind_result($flag_color, $kwh, $percentage);
+        $arrayTaxas = array();                   
+        /* fetch values */
+        while ($stmt->fetch()) {
+
+            $temp = array();
+            $temp['flag_color'] = $flag_color; 
+            $temp['kwh'] = $kwh; 
+            $temp['percentage'] = $percentage;
+             
+            array_push($arrayTaxas, $temp);
+
+        }
+        /* close statement */
+        $stmt->close();
+        return $arrayTaxas;
+    }
+
+    public function updateTaxes($flag_color, $kwh, $percentage){    
+        $stmt = $this->con->prepare("UPDATE taxas SET flag_color = $flag_color, kwh = $kwh, percentage = $percentage 
+        WHERE flag_color IS NOT NULL;");     
+
+        if($stmt->execute()){
+            return 1; 
+        }else{
+            return 2; 
+        }
+    }
+
     public function registerFatura($year, $month, $id_user, $consumo){    
         $stmt = $this->con->prepare("INSERT INTO consumo (year, month, id_user, consumo) VALUES (?, ?, ?, ?);");
         $stmt->bind_param("iiii", $year, $month, $id_user, $consumo);       

@@ -23,7 +23,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             $response['message'] = "Login Efetuado com sucesso!"; 
         }else{
             $response['error'] = true; 
-            $response['message'] = "Email ou senha incorretos, por favor verifique se os dados estão corretos";          
+            $response['message'] = "Cpf ou senha incorretos, por favor verifique se os dados estão corretos";          
         }
     }
 }
