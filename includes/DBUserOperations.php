@@ -33,6 +33,16 @@ class DBUserOperations{
         }
     }
 
+    public function checkUser($cpf){
+
+        $stmt = $this->con->prepare("SELECT user_id FROM users WHERE cpf = ?");
+        $stmt->bind_param("s", $cpf);
+        $stmt->execute();
+        $stmt->store_result();
+        return $stmt-> num_rows > 0;
+        
+    }
+
     public function userLogin($cpf, $password){
         $stmt = $this->con->prepare("SELECT user_id FROM users WHERE cpf = ? AND password = ?");
         $stmt->bind_param("ss", $cpf, $password);
