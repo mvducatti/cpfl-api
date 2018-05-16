@@ -48,9 +48,9 @@ class DBNewsOperations{
         }
     }
 
-    public function registerFatura($year, $month, $id_user, $consumo){    
-        $stmt = $this->con->prepare("INSERT INTO consumo (year, month, id_user, consumo) VALUES (?, ?, ?, ?);");
-        $stmt->bind_param("iiii", $year, $month, $id_user, $consumo);       
+    public function registerFatura($year, $month, $consumo, $user_id){    
+        $stmt = $this->con->prepare("INSERT INTO consumo (year, month, consumo, user_id) VALUES (?, ?, ?, ?);");
+        $stmt->bind_param("ssss", $year, $month, $consumo, $user_id);       
 
         if($stmt->execute()){
             return 1; 
