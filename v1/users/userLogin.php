@@ -20,6 +20,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             $response['user_id'] = $user['user_id'];
             $response['cpf'] = $user['cpf'];
             $response['user_type'] = $user['user_type'];
+            $response['username'] = $user['username'];
             $response['message'] = "Login Efetuado com sucesso!"; 
         }else{
             $response['error'] = true; 
