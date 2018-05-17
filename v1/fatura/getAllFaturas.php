@@ -1,16 +1,18 @@
 <?php 
 
-require_once '../../includes/DBNewsOperations.php';
+require_once '../../includes/DBFaturaOperations.php';
 
 $response = array(); 
 
     if($_SERVER['REQUEST_METHOD']=='GET'){
 
+    	$user_id = $_GET['user_id'];
+
         $db = new DBNewsOperations();        
          
-        $news = $db->getAllNews();
+        $faturas = $db->getAllFaturas($user_id);
         
-        $response['news'] =  $news;
+        $response['faturas'] =  $faturas;
 
     }else{
         $response['error'] = true; 

@@ -59,34 +59,28 @@ class DBNewsOperations{
         }
     }
 
-    public function getAllNews(){
-        $stmt = $this->con->prepare("SELECT `news_id`, `news_post`, `news_date_created`, `news_poster`, 
-        users.user_profile_pic, users.username, users.email  
-        FROM `news` 
-        INNER JOIN users on news.news_poster = users.user_id");
+    public function getAllFaturas($user_id){
+        $stmt = $this->con->prepare("SELECT year, month, consumo
+        FROM consumo WHERE user_id = ?");
+        $stmt->bind_param("i", $user_id);
         $stmt->execute();
         /* bind result variables */
-        $stmt->bind_result($news_id, $news_post, $news_date_created, $news_poster, 
-        $users_user_profile_pic, $users_username, $users_email);
-        $arrayNews = array();                   
+        $stmt->bind_result($year, $month, $consumo);
+        $arrayFaturas = array();                   
         /* fetch values */
         while ($stmt->fetch()) {
 
             $temp = array();
-            $temp['news_id'] = $news_id; 
-            $temp['news_post'] = $news_post; 
-            $temp['news_poster'] = $news_poster;
-            $temp['news_date_created'] = $news_date_created;
-            $temp['users.username'] = $users_username;
-            $temp['users.email'] = $users_email;
-            $temp['users.user_profile_pic'] = $users_user_profile_pic;
+            $temp['year'] = $year; 
+            $temp['month'] = $month; 
+            $temp['consume'] = $consumo;
              
-            array_push($arrayNews, $temp);
+            array_push($arrayFaturas, $temp);
 
         }
         /* close statement */
         $stmt->close();
-        return $arrayNews;
+        return $arrayFaturas;
     }
 
 }
